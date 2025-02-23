@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Verifica se o usuário já está logado
     if (sessionStorage.getItem("logado") === "true" && window.location.pathname.includes("index.html")) {
-        window.location.href = "Tela.html";
+        window.location.href = "TelaCadForn.html";
     }
 
     if (loginForm) {
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (username === "admin" && password === "12345") {
                 alert("Login bem-sucedido!");
                 sessionStorage.setItem("logado", "true");
-                window.location.href = "Tela.html";
+                window.location.href = "TelaCadForn.html";
             } else {
                 document.getElementById("error-message").style.display = "block";
             }
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Verifica login antes de abrir Tela.html
-if (window.location.pathname.includes("Tela.html")) {
+if (window.location.pathname.includes("TelaCadForn.html")) {
     if (sessionStorage.getItem("logado") !== "true") {
         alert("Você precisa fazer login primeiro!");
         window.location.href = "index.html";
