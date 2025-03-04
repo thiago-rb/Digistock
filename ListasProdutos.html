@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digistock - Lista de Produtos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <a href="Home.html">Início</a>
+        <a href="ListasProdutos.html" class="active">Produtos</a>
+        <a href="#">Categorias</a>
+        <a href="Tela.html">Fornecedores</a>
+        <a href="#">Entrada</a>
+        <a href="#">Saída</a>
+        <a href="#" onclick="logout()">Sair</a>
+    </div>
+    <div class="content">
+        <h2>Lista de Produtos</h2>
+        <button class="btn btn-add" onclick="window.location.href='Produtos.html'">Adicionar Produto</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome do Produto</th>
+                    <th>Categoria</th>
+                    <th>Fornecedor</th>
+                    <th>Estoque Mínimo</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-produtos">
+                <!-- Produtos serão listados aqui dinamicamente -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
