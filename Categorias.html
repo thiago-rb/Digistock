@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digistock - Categorias</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <a href="Home.html">Início</a>
+        <a href="ListasProdutos.html">Produtos</a>
+        <a href="Categorias.html" class="active">Categorias</a>
+        <a href="Tela.html">Fornecedores</a>
+        <a href="#">Entrada</a>
+        <a href="#">Saída</a>
+        <a href="#" onclick="logout()">Sair</a>
+    </div>
+    <div class="content">
+        <h2>Gerenciamento de Categorias</h2>
+        
+        <!-- Formulário para adicionar nova categoria -->
+        <div class="form-container">
+            <h3>Adicionar Nova Categoria</h3>
+            <div class="form-group">
+                <label>Nome da Categoria:</label>
+                <input type="text" id="categoria-nome" placeholder="Ex: Eletrônicos" required />
+            </div>
+            <div class="buttons">
+                <button class="btn btn-cancel" onclick="limparFormulario()">Limpar</button>
+                <button class="btn btn-save" onclick="adicionarCategoria()">Salvar</button>
+            </div>
+        </div>
+
+        <!-- Lista de categorias cadastradas -->
+        <div class="table-container">
+            <h3>Categorias Cadastradas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome da Categoria</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-categorias">
+                    <!-- As categorias serão carregadas aqui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Função para carregar categorias do localStorage
+        function carregarCategorias() {
+            const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+            const tabela = document.getElementById('tabela-categorias');
+            tabela.innerHTML = ''; // Limpa a tabela antes de recarregar
+
+            categorias.forEach((categoria, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${categoria.nome}</td>
+                    <td>
+                        <button class="btn btn-delete" onclick="excluirCategoria(${index})">Excluir</button>
+                    </td>
+                `;
+                tabela.appendChild(row);
+            });
+        }
+
+        // Função para adicionar uma nova categoria
+        function adicionarCategoria() {
+            const nome = document.getElementById('categoria-nome').value.trim();
+
+            if (nome === '') {
+                alert('Por favor, insira o nome da categoria.');
+                return;
+            }
+
+            const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+            categorias.push({ nome });
+            localStorage.setItem('categorias', JSON.stringify(categorias));
+
+            limparFormulario();
+            carregarCategorias(); // Recarrega a lista de categorias
+        }
+
+        // Função para excluir uma categoria
+        function excluirCategoria(index) {
+            const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+            categorias.splice(index, 1); // Remove a categoria pelo índice
+            localStorage.setItem('categorias', JSON.stringify(categorias));
+            carregarCategorias(); // Recarrega a lista de categorias
+        }
+
+        // Função para limpar o formulário
+        function limparFormulario() {
+            document.getElementById('categoria-nome').value = '';
+        }
+
+        // Carrega as categorias ao carregar a página
+        document.addEventListener('DOMContentLoaded', carregarCategorias);
+    </script>
+</body>
+</html>
