@@ -10,10 +10,10 @@
     <div class="sidebar">
         <a href="Home.html">Início</a>
         <a href="ListasProdutos.html">Produtos</a>
-        <a href="#">Categorias</a>
+        <a href="Categorias.html">Categorias</a>
         <a href="Tela.html" class="active">Fornecedores</a>
-        <a href="#">Entrada</a>
-        <a href="#">Saída</a>
+        <a href="Entrada.html">Entrada</a>
+        <a href="Saida.html">Saída</a>
         <a href="#" onclick="logout()">Sair</a>
     </div>
     <div class="content">
@@ -46,5 +46,34 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+        function salvarFornecedor() {
+            const nome = document.getElementById('nome').value;
+            const documento = document.getElementById('documento').value;
+            const telefone = document.getElementById('telefone').value;
+            const email = document.getElementById('email').value;
+            const endereco = document.getElementById('endereco').value;
+
+            if (!nome || !documento || !telefone || !email || !endereco) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            const fornecedores = JSON.parse(localStorage.getItem('fornecedores')) || [];
+            const novoFornecedor = {
+                id: Date.now(), // ID único
+                nome,
+                documento,
+                telefone,
+                email,
+                endereco
+            };
+            fornecedores.push(novoFornecedor);
+            localStorage.setItem('fornecedores', JSON.stringify(fornecedores));
+
+            alert('Fornecedor cadastrado com sucesso!');
+            window.location.href = 'Home.html';
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Saída de Produtos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <a href="Home.html">Início</a>
+        <a href="ListasProdutos.html">Produtos</a>
+        <a href="Categorias.html">Categorias</a>
+        <a href="Tela.html">Fornecedores</a>
+        <a href="Entrada.html">Entrada</a>
+        <a href="Saida.html" class="active">Saída</a>
+        <a href="#" onclick="logout()">Sair</a>
+    </div>
+    <div class="content">
+        <div class="form-container">
+            <h2>Registrar Saída de Produtos</h2>
+            <div class="form-group">
+                <label>Produto:</label>
+                <select id="produto-saida">
+                    <!-- Produtos serão carregados aqui -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Quantidade:</label>
+                <input type="number" id="quantidade-saida" required />
+            </div>
+            <div class="form-group">
+                <label>Data da Saída:</label>
+                <input type="date" id="data-saida" required />
+            </div>
+            <div class="buttons">
+                <button class="btn btn-cancel" onclick="window.location.href='Home.html'">Cancelar</button>
+                <button class="btn btn-save" onclick="registrarSaida()">Salvar</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarProdutos);
+
+        function carregarProdutos() {
+            const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+            const select = document.getElementById('produto-saida');
+            select.innerHTML = '<option value="">Selecione um produto</option>';
+
+            produtos.forEach(produto => {
+                const option = document.createElement('option');
+                option.value = produto.id;
+                option.textContent = produto.nome;
+                select.appendChild(option);
+            });
+        }
+
+        function registrarSaida() {
+            const produtoId = document.getElementById('produto-saida').value;
+            const quantidade = parseInt(document.getElementById('quantidade-saida').value);
+            const data = document.getElementById('data-saida').value;
+
+            if (!produtoId || !quantidade || !data) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            const saidas = JSON.parse(localStorage.getItem('saidas')) || [];
+            saidas.push({ produtoId, quantidade, data });
+            localStorage.setItem('saidas', JSON.stringify(saidas));
+
+            alert('Saída registrada com sucesso!');
+            window.location.href = 'Home.html';
+        }
+    </script>
+</body>
+</html>

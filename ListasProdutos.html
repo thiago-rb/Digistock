@@ -10,10 +10,10 @@
     <div class="sidebar">
         <a href="Home.html">Início</a>
         <a href="ListasProdutos.html" class="active">Produtos</a>
-        <a href="#">Categorias</a>
+        <a href="Categorias.html">Categorias</a>
         <a href="Tela.html">Fornecedores</a>
-        <a href="#">Entrada</a>
-        <a href="#">Saída</a>
+        <a href="Entrada.html">Entrada</a>
+        <a href="Saida.html">Saída</a>
         <a href="#" onclick="logout()">Sair</a>
     </div>
     <div class="content">
@@ -37,5 +37,28 @@
         </table>
     </div>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarProdutos);
+
+        function carregarProdutos() {
+            const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+            const tabela = document.getElementById('tabela-produtos');
+            tabela.innerHTML = ''; // Limpa a tabela antes de recarregar
+
+            produtos.forEach(produto => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${produto.codigo}</td>
+                    <td>${produto.nome}</td>
+                    <td>${produto.categoria}</td>
+                    <td>${produto.fornecedor}</td>
+                    <td>${produto.estoqueMinimo}</td>
+                    <td>${produto.quantidade}</td>
+                    <td>R$ ${produto.preco.toFixed(2)}</td>
+                `;
+                tabela.appendChild(row);
+            });
+        }
+    </script>
 </body>
 </html>

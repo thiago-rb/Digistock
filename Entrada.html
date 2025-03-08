@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Entrada de Produtos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <a href="Home.html">Início</a>
+        <a href="ListasProdutos.html">Produtos</a>
+        <a href="Categorias.html">Categorias</a>
+        <a href="Tela.html">Fornecedores</a>
+        <a href="Entrada.html" class="active">Entrada</a>
+        <a href="Saida.html">Saída</a>
+        <a href="#" onclick="logout()">Sair</a>
+    </div>
+    <div class="content">
+        <div class="form-container">
+            <h2>Registrar Entrada de Produtos</h2>
+            <div class="form-group">
+                <label>Produto:</label>
+                <select id="produto-entrada">
+                    <!-- Produtos serão carregados aqui -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Fornecedor:</label>
+                <select id="fornecedor-entrada">
+                    <!-- Fornecedores serão carregados aqui -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Data da Entrada:</label>
+                <input type="date" id="data-entrada" required />
+            </div>
+            <div class="form-group">
+                <label>Preço do Custo:</label>
+                <input type="number" id="preco-custo" step="0.01" required />
+            </div>
+            <div class="form-group">
+                <label>Quantidade:</label>
+                <input type="number" id="quantidade-entrada" required />
+            </div>
+            <div class="buttons">
+                <button class="btn btn-cancel" onclick="window.location.href='Home.html'">Cancelar</button>
+                <button class="btn btn-save" onclick="registrarEntrada()">Salvar</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarProdutos();
+            carregarFornecedores();
+        });
+
+        function carregarProdutos() {
+            const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+            const select = document.getElementById('produto-entrada');
+            select.innerHTML = '<option value="">Selecione um produto</option>';
+
+            produtos.forEach(produto => {
+                const option = document.createElement('option');
+                option.value = produto.id;
+                option.textContent = produto.nome;
+                select.appendChild(option);
+            });
+        }
+
+        function carregarFornecedores() {
+            const fornecedores = JSON.parse(localStorage.getItem('fornecedores')) || [];
+            const select = document.getElementById('fornecedor-entrada');
+            select.innerHTML = '<option value="">Selecione um fornecedor</option>';
+
+            fornecedores.forEach(fornecedor => {
+                const option = document.createElement('option');
+                option.value = fornecedor.id;
+                option.textContent = fornecedor.nome;
+                select.appendChild(option);
+            });
+        }
+
+        function registrarEntrada() {
+            const produtoId = document.getElementById('produto-entrada').value;
+            const fornecedorId = document.getElementById('fornecedor-entrada').value;
+            const data = document.getElementById('data-entrada').value;
+            const precoCusto = parseFloat(document.getElementById('preco-custo').value);
+            const quantidade = parseInt(document.getElementById('quantidade-entrada').value);
+
+            if (!produtoId || !fornecedorId || !data || !precoCusto || !quantidade) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            const entradas = JSON.parse(localStorage.getItem('entradas')) || [];
+            entradas.push({ produtoId, fornecedorId, data, precoCusto, quantidade });
+            localStorage.setItem('entradas', JSON.stringify(entradas));
+
+            alert('Entrada registrada com sucesso!');
+            window.location.href = 'Home.html';
+        }
+    </script>
+</body>
+</html>

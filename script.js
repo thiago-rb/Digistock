@@ -1,10 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Verifica se o usuário está logado
-    if (sessionStorage.getItem("logado") !== "true" && !window.location.pathname.includes("index.html")) {
-        alert("Você precisa fazer login primeiro!");
-        window.location.href = "index.html";
-    }
-
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", function (event) {
@@ -25,4 +19,21 @@ document.addEventListener("DOMContentLoaded", function () {
 function logout() {
     sessionStorage.removeItem("logado");
     window.location.href = "index.html";
+}
+
+//espaço
+
+document.addEventListener('DOMContentLoaded', carregarCategoriasProduto);
+
+function carregarCategoriasProduto() {
+    const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+    const select = document.getElementById('produto-categoria');
+    select.innerHTML = '<option value="">Selecione uma categoria</option>';
+
+    categorias.forEach(categoria => {
+        const option = document.createElement('option');
+        option.value = categoria.nome;
+        option.textContent = categoria.nome;
+        select.appendChild(option);
+    });
 }
