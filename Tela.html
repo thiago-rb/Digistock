@@ -3,45 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Fornecedores</title>
+    <title>Cadastro de Fornecedores - Digistock</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="sidebar">
-        <a href="Home.html">Início</a>
-        <a href="ListasProdutos.html">Produtos</a>
-        <a href="Categorias.html">Categorias</a>
-        <a href="Tela.html" class="active">Fornecedores</a>
-        <a href="Entrada.html">Entrada</a>
-        <a href="Saida.html">Saída</a>
-        <a href="#" onclick="logout()">Sair</a>
+        <a href="Home.html"><i class="fas fa-home"></i> Início</a>
+        <a href="ListasProdutos.html"><i class="fas fa-boxes"></i> Produtos</a>
+        <a href="Categorias.html"><i class="fas fa-tags"></i> Categorias</a>
+        <a href="Tela.html" class="active"><i class="fas fa-truck"></i> Fornecedores</a>
+        <a href="Entrada.html"><i class="fas fa-arrow-down"></i> Entrada</a>
+        <a href="Venda.html"><i class="fas fa-arrow-up"></i> Venda</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
     </div>
     <div class="content">
         <div class="form-container">
             <h2>Cadastro de Fornecedores</h2>
             <div class="form-group">
-                <label>Nome do Fornecedor:</label>
+                <label><i class="fas fa-user"></i> Nome do Fornecedor:</label>
                 <input type="text" id="nome" />
             </div>
             <div class="form-group">
-                <label>CNPJ ou CPF:</label>
+                <label><i class="fas fa-id-card"></i> CNPJ ou CPF:</label>
                 <input type="text" id="documento" />
             </div>
             <div class="form-group">
-                <label>Telefone:</label>
+                <label><i class="fas fa-phone"></i> Telefone:</label>
                 <input type="text" id="telefone" />
             </div>
             <div class="form-group">
-                <label>Email:</label>
+                <label><i class="fas fa-envelope"></i> Email:</label>
                 <input type="email" id="email" />
             </div>
             <div class="form-group">
-                <label>Endereço:</label>
+                <label><i class="fas fa-map-marker-alt"></i> Endereço:</label>
                 <input type="text" id="endereco" />
             </div>
             <div class="buttons">
-                <button class="btn btn-cancel" onclick="window.location.href='Home.html'">Cancelar</button>
-                <button class="btn btn-save" onclick="salvarFornecedor()">Salvar</button>
+                <button class="btn btn-cancel" onclick="window.location.href='Home.html'"><i class="fas fa-times"></i> Cancelar</button>
+                <button class="btn btn-save" onclick="salvarFornecedor()"><i class="fas fa-save"></i> Salvar</button>
             </div>
         </div>
     </div>

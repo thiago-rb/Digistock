@@ -21,19 +21,53 @@ function logout() {
     window.location.href = "index.html";
 }
 
-//espaço
-
-document.addEventListener('DOMContentLoaded', carregarCategoriasProduto);
-
-function carregarCategoriasProduto() {
+// Função para carregar categorias
+function carregarCategorias() {
     const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
-    const select = document.getElementById('produto-categoria');
-    select.innerHTML = '<option value="">Selecione uma categoria</option>';
+    const tabela = document.getElementById('tabela-categorias');
+    tabela.innerHTML = '';
 
-    categorias.forEach(categoria => {
-        const option = document.createElement('option');
-        option.value = categoria.nome;
-        option.textContent = categoria.nome;
-        select.appendChild(option);
+    categorias.forEach((categoria, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${categoria.nome}</td>
+            <td>
+                <button class="btn btn-delete" onclick="excluirCategoria(${index})">Excluir</button>
+            </td>
+        `;
+        tabela.appendChild(row);
     });
 }
+
+// Função para adicionar uma nova categoria
+function adicionarCategoria() {
+    const nome = document.getElementById('categoria-nome').value.trim();
+
+    if (nome === '') {
+        alert('Por favor, insira o nome da categoria.');
+        return;
+    }
+
+    const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+    categorias.push({ nome });
+    localStorage.setItem('categorias', JSON.stringify(categorias));
+
+    limparFormulario();
+    carregarCategorias();
+}
+
+// Função para excluir uma categoria
+function excluirCategoria(index) {
+    const categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+    categorias.splice(index, 1);
+    localStorage.setItem('categorias', JSON.stringify(categorias));
+    carregarCategorias();
+}
+
+// Função para limpar o formulário
+function limparFormulario() {
+    document.getElementById('categoria-nome').value = '';
+}
+
+// Carrega as categorias ao carregar a página
+document.addEventListener('DOMContentLoaded', carregarCategorias);

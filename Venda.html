@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Venda de Produtos - Digistock</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <a href="Home.html"><i class="fas fa-home"></i> Início</a>
+        <a href="ListasProdutos.html"><i class="fas fa-boxes"></i> Produtos</a>
+        <a href="Categorias.html"><i class="fas fa-tags"></i> Categorias</a>
+        <a href="Tela.html"><i class="fas fa-truck"></i> Fornecedores</a>
+        <a href="Entrada.html"><i class="fas fa-arrow-down"></i> Entrada</a>
+        <a href="Venda.html" class="active"><i class="fas fa-arrow-up"></i> Venda</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+    </div>
+    <div class="content">
+        <div class="form-container">
+            <h2>Registrar Venda de Produtos</h2>
+            <div class="form-group">
+                <label><i class="fas fa-box"></i> Produto:</label>
+                <select id="produto-saida">
+                    <!-- Produtos serão carregados aqui -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-boxes"></i> Quantidade:</label>
+                <input type="number" id="quantidade-saida" required />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-calendar"></i> Data da Venda:</label>
+                <input type="date" id="data-saida" required />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Cliente:</label>
+                <input type="text" id="cliente-venda" required />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-money-bill"></i> Forma de Pagamento:</label>
+                <select id="forma-pagamento" required>
+                    <option value="dinheiro">Dinheiro</option>
+                    <option value="cartao">Cartão</option>
+                    <option value="pix">PIX</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-dollar-sign"></i> Valor Total:</label>
+                <input type="number" id="valor-total" step="0.01" required />
+            </div>
+            <div class="buttons">
+                <button class="btn btn-cancel" onclick="window.location.href='Home.html'"><i class="fas fa-times"></i> Cancelar</button>
+                <button class="btn btn-save" onclick="registrarSaida()"><i class="fas fa-save"></i> Salvar</button>
+            </div>
+        </div>
+        <div class="table-container">
+            <h3>Vendas Recentes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor Total</th>
+                        <th>Forma de Pagamento</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-vendas">
+                    <!-- As vendas serão carregadas aqui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarProdutos);
+
+        function carregarProdutos() {
+            const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+            const select = document.getElementById('produto-saida');
+            select.innerHTML = '<option value="">Selecione um produto</option>';
+
+            produtos.forEach(produto => {
+                const option = document.createElement('option');
+                option.value = produto.id;
+                option.textContent = produto.nome;
+                select.appendChild(option);
+            });
+        }
+
+        function registrarSaida() {
+            const produtoId = document.getElementById('produto-saida').value;
+            const quantidade = parseInt(document.getElementById('quantidade-saida').value);
+            const data = document.getElementById('data-saida').value;
+            const cliente = document.getElementById('cliente-venda').value;
+            const formaPagamento = document.getElementById('forma-pagamento').value;
+            const valorTotal = parseFloat(document.getElementById('valor-total').value);
+
+            if (!produtoId || !quantidade || !data || !cliente || !formaPagamento || !valorTotal) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            // Atualizar o estoque do produto
+            const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+            const produtoIndex = produtos.findIndex(p => p.id == produtoId);
+            if (produtoIndex !== -1) {
+                produtos[produtoIndex].quantidade -= quantidade; // Reduz a quantidade em estoque
+                localStorage.setItem('produtos', JSON.stringify(produtos));
+            }
+
+            // Registrar a venda
+            const saidas = JSON.parse(localStorage.getItem('saidas')) || [];
+            saidas.push({ produtoId, quantidade, data, cliente, formaPagamento, valorTotal });
+            localStorage.setItem('saidas', JSON.stringify(saidas));
+
+            alert('Venda registrada com sucesso!');
+            window.location.href = 'Home.html';
+        }
+    </script>
+</body>
+</html>

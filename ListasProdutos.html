@@ -3,38 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digistock - Lista de Produtos</title>
+    <title>Lista de Produtos - Digistock</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="sidebar">
-        <a href="Home.html">Início</a>
-        <a href="ListasProdutos.html" class="active">Produtos</a>
-        <a href="Categorias.html">Categorias</a>
-        <a href="Tela.html">Fornecedores</a>
-        <a href="Entrada.html">Entrada</a>
-        <a href="Saida.html">Saída</a>
-        <a href="#" onclick="logout()">Sair</a>
+        <a href="Home.html"><i class="fas fa-home"></i> Início</a>
+        <a href="ListasProdutos.html" class="active"><i class="fas fa-boxes"></i> Produtos</a>
+        <a href="Categorias.html"><i class="fas fa-tags"></i> Categorias</a>
+        <a href="Tela.html"><i class="fas fa-truck"></i> Fornecedores</a>
+        <a href="Entrada.html"><i class="fas fa-arrow-down"></i> Entrada</a>
+        <a href="Venda.html"><i class="fas fa-arrow-up"></i> Venda</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
     </div>
     <div class="content">
         <h2>Lista de Produtos</h2>
-        <button class="btn btn-add" onclick="window.location.href='Produtos.html'">Adicionar Produto</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nome do Produto</th>
-                    <th>Categoria</th>
-                    <th>Fornecedor</th>
-                    <th>Estoque Mínimo</th>
-                    <th>Quantidade</th>
-                    <th>Preço</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-produtos">
-                <!-- Produtos serão listados aqui dinamicamente -->
-            </tbody>
-        </table>
+        <button class="btn btn-add" onclick="window.location.href='Produtos.html'"><i class="fas fa-plus"></i> Adicionar Produto</button>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome do Produto</th>
+                        <th>Categoria</th>
+                        <th>Fornecedor</th>
+                        <th>Estoque Mínimo</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-produtos">
+                    <!-- Produtos serão listados aqui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
     </div>
     <script src="script.js"></script>
     <script>
@@ -43,7 +46,7 @@
         function carregarProdutos() {
             const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
             const tabela = document.getElementById('tabela-produtos');
-            tabela.innerHTML = ''; // Limpa a tabela antes de recarregar
+            tabela.innerHTML = '';
 
             produtos.forEach(produto => {
                 const row = document.createElement('tr');

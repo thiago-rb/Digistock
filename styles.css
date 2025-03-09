@@ -251,3 +251,16 @@ table tr:hover {
 .btn-delete:hover {
     background-color: #cc0000;
 }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
